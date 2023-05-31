@@ -1,13 +1,19 @@
 import pandas as pd
+
+#reading google spreadsheet as csv file through url 
 datapath = "https://docs.google.com/spreadsheets/d/1jPq_zyLptX3My07oOxUpsrkPYJUB_ryEst8KA4dvMfk/export?format=csv"
 data = pd.read_csv(datapath)
-name = data.Name
-id = data.iloc[:,1]
+
+
+id = data.Name #this list contains Bits ID of all the Students
+name = data.iloc[:,1] #this list contains names of all the Students
 s1 = slice(4)
 s2 = slice(8,12)
 s3 = slice(4,6)
 s4 = slice(6,8)
 container = []
+
+#List ocontaining all the branches
 list = {
 "AA": "ECE",
 "AB": "Manu",
@@ -25,20 +31,25 @@ list = {
 "B5" : "MSc Physics"
 }
 x=0
-while x<len(name):  
-    if(name[x][s4]=="PS"):
+while x<len(id):  
+    
+#To check Whether the student is Single Degree or Dual Degree and add the branches of all the students
+    if(id[x][s4]=="PS"):
       d = "Single Degree "
-      d+= list[name[x][s3]]
+      d+= list[id[x][s3]]
     else:
       d = "Dual Degree "
-      d += list[name[x][s3]]+" + "+list[name[x][s4]]
+      d += list[id[x][s3]]+" + "+list[id[x][s4]]
         
+#Storing the name , Bits ID , Bits mail , Branch as Dictionary  
     container.append( {
        
-        "Name": id[x] , "Bits ID":  name[x],"Bits Mail": ("f"+name[x][s1]+name[x][s2]+"@pilani.bits-pilani.ac.in"),
+        "Name": name[x] , "Bits ID":  id[x],"Bits Mail": ("f"+id[x][s1]+id[x][s2]+"@pilani.bits-pilani.ac.in"),
                        "Branch": d      
                          } )
     x = x + 1
+
+#printing all the detailes of the students     
 for y in container:    
-    print(y)
+    print(y) 
     
